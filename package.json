@@ -1,6 +1,6 @@
 {
   "name": "taskmatefrontend",
-  "private": false,
+  "private": true,
   "homepage": "https://daniildudyrev.github.io/TaskMateFrontend_v1",
   "description": "OpenAPI client for ",
   "author": "OpenAPI-Generator Contributors",
