@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import image from "../../images/background.jpg";
+// import image from "../../images/background.jpg";
 import SignUpPopUpPage from "../../features/auth/SignUpPopUpPage";
 import SignInPopUpPage from "../../features/auth/SignInPopUpPage";
 import {Button} from "@mui/material";
@@ -16,7 +16,7 @@ function ResponsiveAppBar() {
     
     return (
         <AppBar position="fixed" sx={{
-            backgroundImage: `url(${image})`,
+            // backgroundImage: `url(${image})`,
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
