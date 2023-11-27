@@ -3,9 +3,11 @@ import {Box, Container, styled, TextField, Theme, Typography} from "@mui/materia
 import {CSSTransition} from 'react-transition-group';
 import CloseIcon from '@mui/icons-material/Close';
 import {useNavigate} from "react-router-dom";
-
 import {useForm} from "react-hook-form";
-import api from "../Api";
+import {UserApi} from "../../apis/user-api";
+// import api from "../Api";
+const userApi = new UserApi();
+
 
 interface SignupForm {
     name: string;
@@ -26,8 +28,8 @@ const SignUpPopUpPage: React.FC<SignUpPopUpPageProps> = ({open, setOpen}) => {
     const [error, setError] = useState(null);
     const onSubmit = async (data: SignupForm) => {
         try {
-            const response = await api.post("/user/register", data);
-            localStorage.setItem("token", response.data.token);
+            const response = await userApi.userRegisterPost(data);
+            localStorage.setItem("token", response.data.token!);
             navigate("/PersonalSpace");
         } catch (error) {
             // @ts-ignore

@@ -17,7 +17,7 @@ import {useNavigate} from "react-router-dom";
 import {Invite, IssueRequest, IssueResponse, ProjectResponse, User, ProjectUserResponse} from "../../models";
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonalSpacePageIssuesCalendar from './PersonalSpacePageIssuesCalendar';
-import image from "../../images/background.jpg";
+// import image from "../../images/background.jpg";
 import ListIcon from '@mui/icons-material/List';
 import TaskIcon from '@mui/icons-material/SpaceDashboardSharp';
 import CalendarIcon from '@mui/icons-material/Event';
@@ -479,7 +479,7 @@ const PersonalSpacePage: React.FC = () => {
     return (
         <div className="mainPersonalSpaceDiv">
             <div className="subMainPersonalSpaceDiv" style={{
-                backgroundImage: `url(${image})`,
+                // backgroundImage: `url(${image})`,
                 width: open ? "90vw" : "100vw",
                 transform: open ? "translateX(275px)" : "translateX(0)",
             }}>

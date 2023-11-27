@@ -1,8 +1,8 @@
 ﻿import React, {useEffect} from "react";
 import {Typography} from "@mui/material";
 import Header from "../components/Layout/Header";
-import image from "../images/background.jpg";
-import PersonalSpaceImage from "../images/image.png";
+// import image from "../images/background.jpg";
+// import PersonalSpaceImage from "../images/image.png";
 import "../index.css"
 import {useNavigate} from "react-router-dom";
 
@@ -15,7 +15,7 @@ const MainPage = () => {
         }
     }, []);
     return (
-        <div style={{backgroundImage: `url(${image})`}}>
+        <div style={{backgroundColor: '#acc4e4'}}>
             <Header></Header>
             <Typography variant="h4" align="center" style={{
                 fontFamily: 'monospace',
@@ -24,7 +24,7 @@ const MainPage = () => {
                 color: '#302c34',
                 textDecoration: 'none',
                 paddingLeft: 200,
-                backgroundImage: `url(${image})`,
+                backgroundColor: '#acc4e4',
                 maxWidth: 600,
                 paddingTop: 200,
             }}>
@@ -38,13 +38,13 @@ const MainPage = () => {
                 top: 100,
                 boxShadow: "0 0 15px rgba(0, 0, 0, 0.5)",
             }}>
-                <img
-                    onContextMenu={(e) => e.preventDefault()}    
-                    style={{
-                    width: 1200,
-                    height: 700,
-                    pointerEvents: 'none'
-                }} src={PersonalSpaceImage} alt="qwe" />
+                {/*<img*/}
+                {/*    onContextMenu={(e) => e.preventDefault()}    */}
+                {/*    style={{*/}
+                {/*    width: 1200,*/}
+                {/*    height: 700,*/}
+                {/*    pointerEvents: 'none'*/}
+                {/*}} src={PersonalSpaceImage} alt="qwe" />*/}
             </div>
         </div>
     );

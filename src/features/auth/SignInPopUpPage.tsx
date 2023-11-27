@@ -9,14 +9,14 @@ import {
     TextField, Theme,
     Typography,
 } from "@mui/material";
-import api from "../Api";
+// import api from "../Api";
 import {CSSTransition} from "react-transition-group";
 import CloseIcon from "@mui/icons-material/Close";
 
-import {ProjectApiFactory, UserApiFactory} from "../../api";
+import { UserApi} from "../../api";
 import axios from "axios";
 
-const userApi = UserApiFactory();
+const userApi = new UserApi();
 
 
 interface SignInForm {
