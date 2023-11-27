@@ -8,7 +8,7 @@ import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import NotfoundPage from "../../features/NotfoundPage";
 
 import MainPage from "../../features/MainPage";
-import image from "../../images/background.jpg";
+// import image from "../../images/background.jpg";
 import PersonalSpacePage from "../../features/pages/PersonalSpacePage";
 import {ToastContainer} from "react-toastify";
 import IssueDetailsPage from "../../features/pages/IssueDetailsPage";
@@ -21,7 +21,7 @@ export default function MainLayout() {
         <ThemeProvider theme={theme}>
             <ToastContainer></ToastContainer>
             <CssBaseline />
-            <Container style={{padding: 0, display: "flex", backgroundImage: `url(${image})`, maxWidth: "100%"}}>
+            <Container style={{padding: 0, display: "flex", maxWidth: "100%"}}>
                 <Router basename={import.meta.env.BASE_URL}>
                     <main>
                         <Grid container spacing={5} sx={{ mt: 3 }}>
