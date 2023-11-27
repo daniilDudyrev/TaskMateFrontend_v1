@@ -21,6 +21,7 @@ const IssueDetailsPage: React.FC = () => {
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
     useEffect(() => {

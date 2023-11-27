@@ -31,10 +31,11 @@ const IssueAddModalCalendar: React.FC<IssueAddModalProps> = ({
     const [performerId, setPerformerId] = useState('');
     const [userEmails, setUserEmails] = useState({});
     const token = localStorage.getItem("token");
-    
+
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
     useEffect(() => {

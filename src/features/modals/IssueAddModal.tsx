@@ -38,6 +38,7 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
     useEffect(() => {

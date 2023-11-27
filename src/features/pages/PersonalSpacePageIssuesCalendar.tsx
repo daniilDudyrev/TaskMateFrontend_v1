@@ -53,6 +53,7 @@ const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = 
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
     

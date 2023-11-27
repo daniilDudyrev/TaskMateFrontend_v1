@@ -74,6 +74,7 @@ const PersonalSpacePage: React.FC = () => {
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
 
@@ -307,7 +308,7 @@ const PersonalSpacePage: React.FC = () => {
                 projectId: selectedProject
             }
             await issueApi.issueAddPost(newIssue, requestConfig);
-            const response = await issueApi.issueGetAllByProjectIdGet(selectedProject);
+            const response = await issueApi.issueGetAllByProjectIdGet(selectedProject, requestConfig);
             const data = response.data;
             setIssues(data.issues || []);
         }
@@ -318,7 +319,7 @@ const PersonalSpacePage: React.FC = () => {
     const handleDeleteIssue = async (issueId: string) => {
         await issueApi.issueDeleteByIdDelete(issueId, requestConfig);
         if (selectedProject) {
-            const response = await issueApi.issueGetAllByProjectIdGet(selectedProject);
+            const response = await issueApi.issueGetAllByProjectIdGet(selectedProject, requestConfig);
             const data = response.data;
             setIssues(data.issues || []);
         }
@@ -410,7 +411,7 @@ const PersonalSpacePage: React.FC = () => {
     useEffect(() => {
         const loadIssuesForProject = async (projectId: string) => {
             try {
-                const response = await issueApi.issueGetAllByProjectIdGet(projectId);
+                const response = await issueApi.issueGetAllByProjectIdGet(projectId, requestConfig);
                 const data = response.data;
                 setIssues(data.issues || []);
                 localStorage.setItem('issues', JSON.stringify(data.issues || []));
@@ -433,7 +434,7 @@ const PersonalSpacePage: React.FC = () => {
     useEffect(() => {
         const loadProjectUsers = async (projectId: string) => {
             try {
-                const response = await projectApi.projectGetUsersByIdGet(projectId);
+                const response = await projectApi.projectGetUsersByIdGet(projectId, requestConfig);
                 const data = response.data;
                 setProjectUsers(data.projectUsers || []);
                 console.log("projectUsers");

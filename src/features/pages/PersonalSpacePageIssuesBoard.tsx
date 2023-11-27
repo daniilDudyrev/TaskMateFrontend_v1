@@ -22,6 +22,7 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
     
