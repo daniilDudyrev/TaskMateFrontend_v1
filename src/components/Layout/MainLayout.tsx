@@ -27,12 +27,12 @@ export default function MainLayout() {
                         </Grid>
                     </main>
                     <Routes>
-                        <Route path="#/" element={<MainPage/>}/>
-                        <Route path="#/SignIn"/>
-                        <Route path="#/SignUp"/>
-                        <Route path="#/issue/:id" element={<IssueDetailsPage/>}/>
+                        <Route path="/" element={<MainPage/>}/>
+                        <Route path="/SignIn"/>
+                        <Route path="/SignUp"/>
+                        <Route path="/issue/:id" element={<IssueDetailsPage/>}/>
                         <Route path="*" element={<NotfoundPage/>}/>
-                        <Route path="#/PersonalSpace" element={<PersonalSpacePage/>}/>
+                        <Route path="/PersonalSpace" element={<PersonalSpacePage/>}/>
                     </Routes>
                 {/*</Router>*/}
             </Container>
