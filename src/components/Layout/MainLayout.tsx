@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { Routes, HashRouter as Router, Route } from 'react-router-dom';
+import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
 import NotfoundPage from "../../features/NotfoundPage";
 
 import MainPage from "../../features/MainPage";
