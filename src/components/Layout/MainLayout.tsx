@@ -21,20 +21,20 @@ export default function MainLayout() {
             <ToastContainer></ToastContainer>
             <CssBaseline />
             <Container style={{padding: 0, display: "flex", maxWidth: "100%"}}>
-                <HashRouter basename={import.meta.env.BASE_URL}>
+                <Router basename={import.meta.env.BASE_URL}>
                     <main>
                         <Grid container spacing={5} sx={{ mt: 3 }}>
                         </Grid>
                     </main>
                     <Routes>
-                        <Route path="#/" element={<MainPage/>}/>
-                        <Route path="#/SignIn"/>
-                        <Route path="#/SignUp"/>
-                        <Route path="#/issue/:id" element={<IssueDetailsPage/>}/>
+                        <Route path="/" element={<MainPage/>}/>
+                        <Route path="/SignIn"/>
+                        <Route path="/SignUp"/>
+                        <Route path="/issue/:id" element={<IssueDetailsPage/>}/>
                         <Route path="*" element={<NotfoundPage/>}/>
-                        <Route path="#/PersonalSpace" element={<PersonalSpacePage/>}/>
+                        <Route path="/PersonalSpace" element={<PersonalSpacePage/>}/>
                     </Routes>
-                </HashRouter>
+                </Router>
             </Container>
         </ThemeProvider>
     );
