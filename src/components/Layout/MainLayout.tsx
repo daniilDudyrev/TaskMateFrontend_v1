@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import { Routes, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Routes, BrowserRouter as Router, Route, HashRouter } from 'react-router-dom';
 import NotfoundPage from "../../features/NotfoundPage";
 
 import MainPage from "../../features/MainPage";
@@ -15,14 +15,13 @@ import IssueDetailsPage from "../../features/pages/IssueDetailsPage";
 
 const theme = createTheme();
 
-
 export default function MainLayout() {
     return (
         <ThemeProvider theme={theme}>
             <ToastContainer></ToastContainer>
             <CssBaseline />
             <Container style={{padding: 0, display: "flex", maxWidth: "100%"}}>
-                <Router basename={import.meta.env.BASE_URL}>
+                <HashRouter basename={import.meta.env.BASE_URL}>
                     <main>
                         <Grid container spacing={5} sx={{ mt: 3 }}>
                         </Grid>
@@ -35,7 +34,7 @@ export default function MainLayout() {
                         <Route path="*" element={<NotfoundPage/>}/>
                         <Route path="/PersonalSpace" element={<PersonalSpacePage/>}/>
                     </Routes>
-                </Router>
+                </HashRouter>
             </Container>
         </ThemeProvider>
     );
