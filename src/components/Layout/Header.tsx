@@ -1,7 +1,6 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-// import image from "../../images/background.jpg";
 import SignUpPopUpPage from "../../features/auth/SignUpPopUpPage";
 import SignInPopUpPage from "../../features/auth/SignInPopUpPage";
 import {Button} from "@mui/material";
@@ -17,6 +16,7 @@ function ResponsiveAppBar() {
     return (
         <AppBar position="fixed" sx={{
             // backgroundImage: `url(${image})`,
+            backgroundColor: '#ad998b',
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
@@ -34,10 +34,16 @@ function ResponsiveAppBar() {
             <div>
                 <Button ref={setAnchorSignUp} onClick={() => setOpenSignUp((o) => !o)} type="button"
                     sx={{
-                        backgroundColor: "white", marginRight: 3, marginTop: 1.5, fontFamily: 'monospace',
+                        backgroundColor: '#ded3c5',
+                        "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                        color: '#857366',
+                        border: "1px solid #ded3c5",
+                        borderRadius: "4px",
                         fontWeight: 700,
                         letterSpacing: '.3rem',
-                        textDecoration: 'none'
+                        textDecoration: 'none',
+                        marginTop: 2,
+                        marginRight: 5
                     }}
                     >
                     Sign Up
@@ -45,10 +51,16 @@ function ResponsiveAppBar() {
                 <SignUpPopUpPage anchor={anchorSignUp} open={openSignUp} setOpen={setOpenSignUp} setAnchor={setAnchorSignUp} />
                 <Button ref={setAnchorSignIn} onClick={() => setOpenSignIn((o) => !o)} type="button"
                         sx={{
-                            backgroundColor: "white", marginRight: 3, marginTop: 1.5, fontFamily: 'monospace',
+                            backgroundColor: '#ded3c5',
+                            "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                            color: '#857366',
+                            border: "1px solid #ded3c5",
+                            borderRadius: "4px",
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             textDecoration: 'none',
+                            marginTop: 2,
+                            marginRight: 5
                         }}
                 >
                     Sign In

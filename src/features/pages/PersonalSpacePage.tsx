@@ -17,7 +17,6 @@ import {useNavigate} from "react-router-dom";
 import {Invite, IssueRequest, IssueResponse, ProjectResponse, User, ProjectUserResponse} from "../../models";
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonalSpacePageIssuesCalendar from './PersonalSpacePageIssuesCalendar';
-// import image from "../../images/background.jpg";
 import ListIcon from '@mui/icons-material/List';
 import TaskIcon from '@mui/icons-material/SpaceDashboardSharp';
 import CalendarIcon from '@mui/icons-material/Event';
@@ -484,9 +483,15 @@ const PersonalSpacePage: React.FC = () => {
                 width: open ? "90vw" : "100vw",
                 transform: open ? "translateX(275px)" : "translateX(0)",
             }}>
-                <Button className="buttonLeftMenuOpen"
+                <Button
                         sx={{
-                            display: open ? 'none' : 'block'
+                            display: open ? 'none' : 'block',
+                            maxHeight: 50,
+                            marginTop: 2,
+                            marginLeft: 2,
+                            backgroundColor: '#ded3c5',
+                            "&:hover": {backgroundColor: "#b79a84"},
+                            color: '#FFFFFF'
                         }}
                         color="primary"
                         onClick={() => setOpen(!open)}
@@ -630,12 +635,24 @@ const PersonalSpacePage: React.FC = () => {
                                     {`You were invited by a ${detail.email} to the project ${detail.projectName}`}
                                 </Typography>
                                 <div>
-                                    <Button
+                                    <Button sx={{
+                                        "&.MuiButtonBase-root": {
+                                            backgroundColor: '#ded3c5',
+                                            "&:hover": {backgroundColor: "#857366", color: "#FFFFFF"},
+                                            color: '#857366',
+                                        },
+                                    }}
                                         onClick={() => handleAcceptInvite(invites[index].projectId!, invites[index].initiatorUserId!)}
                                     >
                                         Accept
                                     </Button>
-                                    <Button
+                                    <Button sx={{
+                                        "&.MuiButtonBase-root": {
+                                            backgroundColor: '#ded3c5',
+                                            "&:hover": {backgroundColor: "#857366", color: "#FFFFFF"},
+                                            color: '#857366',
+                                        },
+                                    }}
                                         onClick={() => handleDeclineInvite(invites[index].projectId!, invites[index].initiatorUserId!)}
                                     >
                                         Decline
@@ -652,10 +669,15 @@ const PersonalSpacePage: React.FC = () => {
                 </Menu>
                 <div style={{
                     position: 'absolute' as 'absolute',
-                    top: '40%',
-                    right: '5%',
-                    backgroundColor: 'white'
-                }}><Button onClick={handleLogout}>Logout</Button></div>
+                    top: '30%',
+                    right: '5%'
+                }}><Button sx={{
+                    backgroundColor: '#ded3c5',
+                    "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                    color: '#857366',
+                    border: "1px solid #ded3c5",
+                    borderRadius: "4px",
+                }} onClick={handleLogout}>Logout</Button></div>
             </div>
             <div
                 style={{display: "flex", minHeight: '100vh'}}
@@ -668,7 +690,9 @@ const PersonalSpacePage: React.FC = () => {
                 >
                     <List>
                         <Button
-                            sx={{marginLeft: 20, backgroundColor: "#b8cce4", color: "#64B5F6" ,"&:hover": {backgroundColor: "#81a4cf"}}}
+                            sx={{marginLeft: 20, backgroundColor: "#b79a84", 
+                                color: "#ffffff" ,
+                                "&:hover": {backgroundColor: "#857366"}}}
 
                             color="primary"
                             onClick={() => setOpen(!open)}
@@ -684,8 +708,9 @@ const PersonalSpacePage: React.FC = () => {
                         <Collapse in={open}>
                             <Typography variant="h4" gutterBottom sx={{
                                 fontWeight: 700,
-                                letterSpacing: '.1rem',
+                                letterSpacing: '.1em',
                                 textDecoration: 'none',
+                                fontFamily: 'Trebuchet MS'
                             }}>
                                 Projects
                             </Typography>
@@ -711,6 +736,8 @@ const PersonalSpacePage: React.FC = () => {
                                         fontWeight: 700,
                                         letterSpacing: '.3rem',
                                         textDecoration: 'none',
+                                        fontFamily: "Unica One"
+                                        
                                     }}/>
                                 </ListItem>
                             ))}
@@ -718,20 +745,40 @@ const PersonalSpacePage: React.FC = () => {
                                 type="button"
                                 onClick={() => setOpenAddProject(!openAddProject)}
                                 sx={{
-                                    backgroundColor: "#b8cce4",
+                                    backgroundColor: "#b79a84",
+                                    color: "#ffffff" ,
+                                    "&:hover": {backgroundColor: "#857366"},
                                     marginTop: 2,
                                     marginLeft: 0,
-                                    fontFamily: 'monospace',
-                                    fontWeight: 700,
-                                    letterSpacing: '.3rem',
+                                    letterSpacing: '.1em',
                                     textDecoration: 'none',
+                                    fontFamily: 'Trebuchet MS',
+                                    fontWeight: 700,
                                 }}
                             >
                                 Add project
                             </Button>
                             <Collapse in={openAddProject}>
                                 <div style={{flex: 1}}>
-                                    <TextField
+                                    <TextField sx ={{
+                                        '& label.Mui-focused': {
+                                            color: '#857366',
+                                        },
+                                        '& .MuiInput-underline:after': {
+                                            borderBottomColor: '#857366',
+                                        },
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#857366',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#857366',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#857366',
+                                            },
+                                        },
+                                    }}
                                         margin="normal"
                                         required
                                         fullWidth
@@ -745,12 +792,14 @@ const PersonalSpacePage: React.FC = () => {
                                         type="button"
                                         onClick={handleAddProject}
                                         sx={{
-                                            backgroundColor: "#b8cce4",
+                                            backgroundColor: "#b79a84",
+                                            color: "#ffffff" ,
+                                            "&:hover": {backgroundColor: "#857366"},
                                             marginTop: 1.5,
-                                            fontFamily: 'monospace',
-                                            fontWeight: 700,
-                                            letterSpacing: '.3rem',
+                                            letterSpacing: '.1em',
                                             textDecoration: 'none',
+                                            fontFamily: 'Trebuchet MS',
+                                            fontWeight: 700,
                                         }}
                                     >
                                         Add
@@ -759,8 +808,9 @@ const PersonalSpacePage: React.FC = () => {
                             </Collapse>
                             <Typography variant="h5" gutterBottom sx={{
                                 fontWeight: 700,
-                                letterSpacing: '.1rem',
+                                letterSpacing: '.1em',
                                 textDecoration: 'none',
+                                fontFamily: 'Trebuchet MS',
                                 marginTop: 10
                             }}>
                                 Team
@@ -772,7 +822,10 @@ const PersonalSpacePage: React.FC = () => {
                                         {userData[projectUser.userId] && (
                                             <Typography
                                                 sx={{
-                                                    cursor: "pointer"
+                                                    cursor: "pointer",
+                                                    letterSpacing: '.1em',
+                                                    textDecoration: 'none',
+                                                    fontFamily: 'Trebuchet MS',
                                                 }}
                                                 ref={anchorElRef}
                                                 // @ts-ignore
@@ -813,7 +866,10 @@ const PersonalSpacePage: React.FC = () => {
                                         }} key={performedIssue.issueId}>
                                             <Typography sx={{
                                                 alignItems: 'center',
-                                                color: 'white'
+                                                color: 'white',
+                                                letterSpacing: '.1em',
+                                                textDecoration: 'none',
+                                                fontFamily: 'Trebuchet MS',
                                             }}>{performedIssue.name}</Typography>
                                         </MenuItem>
                                     )
@@ -862,18 +918,28 @@ const PersonalSpacePage: React.FC = () => {
             <div style={{
                 position: 'fixed',
                 bottom: '5%',
-                right: '5%',
-                backgroundColor: 'white'
+                right: '5%'
             }}>
-                <Button onClick={openIssueAddModal}>+ Issue</Button>
+                <Button sx={{
+                    backgroundColor: '#ded3c5',
+                    "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                    color: '#857366',
+                    border: "1px solid #ded3c5",
+                    borderRadius: "4px",
+                }} onClick={openIssueAddModal}>+ Issue</Button>
             </div>
             <div style={{
                 position: 'fixed',
                 bottom: '5%',
-                right: '10%',
-                backgroundColor: 'white'
+                right: '10%'
             }}>
-                <Button
+                <Button sx={{
+                    backgroundColor: '#ded3c5',
+                    "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                    color: '#857366',
+                    border: "1px solid #ded3c5",
+                    borderRadius: "4px",
+                }}
                     onClick={openAddUserInProjectModal}
                 >+ User</Button>
             </div>

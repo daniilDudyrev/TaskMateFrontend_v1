@@ -13,7 +13,7 @@ import {
 import {CSSTransition} from "react-transition-group";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { UserApi} from "../../api";
+import {UserApi} from "../../api";
 import axios from "axios";
 
 const userApi = new UserApi();
@@ -36,7 +36,7 @@ const SignInPopUpPage: React.FC<SignInPopUpPageProps> = ({open, setOpen}) => {
     const {register, handleSubmit} = useForm<SignInForm>();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-   
+
     const onSubmit = async (data: SignInForm) => {
         try {
             const response = await userApi.userAuthenticationPost(data);
@@ -55,16 +55,49 @@ const SignInPopUpPage: React.FC<SignInPopUpPageProps> = ({open, setOpen}) => {
             unmountOnExit
         >
             <div className="popup-container">
-                <div className="popup-content">
-                    <button className="close-button" onClick={() => setOpen(false)}>
-                        <CloseIcon/>
-                    </button>
+                <div className="popup-content" style={{
+                    backgroundColor: '#b79a84', border: "1px solid #ded3c5",
+                    borderRadius: "4px",
+                    boxShadow: '24px',
+                }}>
+                    <Button sx={{
+                        backgroundColor: '#ded3c5',
+                        "&:hover": {backgroundColor: "#857366", color: "#FFFFFF"},
+                        color: '#857366',
+                        width: 40,
+                        height: 40,
+                        fontSize: 25,
+                        paddingRight: 4,
+                        paddingBottom: 5
+                    }} className="close-button" onClick={() => setOpen(false)}>X
+                        {/*<CloseIcon sx={{ fontSize: 40}}/>*/}
+                    </Button>
                     <Container component="main" maxWidth="xs">
                         <Typography component="h1" variant="h5">
                             Sign In
                         </Typography>
-                        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{mt: 1}}>
-                            <TextField
+                        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{
+                            mt: 1, backgroundColor: '#b79a84'
+                        }}>
+                            <TextField sx={{
+                                '& label.Mui-focused': {
+                                    color: 'white',
+                                },
+                                '& .MuiInput-underline:after': {
+                                    borderBottomColor: '#857366',
+                                },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                },
+                            }}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -74,7 +107,25 @@ const SignInPopUpPage: React.FC<SignInPopUpPageProps> = ({open, setOpen}) => {
                                 autoFocus
                                 {...register("email")}
                             />
-                            <TextField
+                            <TextField sx={{
+                                '& label.Mui-focused': {
+                                    color: 'white',
+                                },
+                                '& .MuiInput-underline:after': {
+                                    borderBottomColor: '#857366',
+                                },
+                                '& .MuiOutlinedInput-root': {
+                                    '& fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                    '&:hover fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: '#857366',
+                                    },
+                                },
+                            }}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -90,10 +141,11 @@ const SignInPopUpPage: React.FC<SignInPopUpPageProps> = ({open, setOpen}) => {
                                 </Typography>
                             )}
                             <Button type="submit" sx={{
-                                mt: 3, mb: 2, backgroundColor: "#c4d4ec", ":hover": {
-                                    backgroundColor: "#c4ccec",
-                                    color: "white"
-                                }
+                                mt: 3, mb: 2, backgroundColor: '#ded3c5',
+                                "&:hover": {backgroundColor: "#b79a84", color: "#FFFFFF"},
+                                color: '#857366',
+                                border: "1px solid #ded3c5",
+                                borderRadius: "4px",
                             }}>
                                 Sign In
                             </Button>

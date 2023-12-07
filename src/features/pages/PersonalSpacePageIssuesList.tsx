@@ -75,18 +75,24 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
     };
 
     const fetchUserEmails = async () => {
-        const emails = {};
-        for (const issue of issues) {
-            try {
-                const response = await userApi.userGetByIdGet(issue.performerId, requestConfig);
-                // @ts-ignore
-                emails[issue.performerId] = response.data.email;
-            } catch (error) {
-                console.error(`Error fetching email for user ${issue.performerId}:`, error);
+        try {
+            const uniqueUserIds = Array.from(new Set(issues!.map(issue => issue.performerId)));
+            const emails = {};
+            for (const userId of uniqueUserIds) {
+                try {
+                    const response = await userApi.userGetByIdGet(userId, requestConfig);
+                    // @ts-ignore
+                    emails[userId] = response.data.email;
+                } catch (error) {
+                    console.error(`Error fetching email for user ${userId}:`, error);
+                }
             }
+    
+            setUserEmails(emails);
         }
-
-        setUserEmails(emails);
+        catch (error) {
+            console.error('Error fetching user emails:', error);
+        }
     };
 
     const groupIssues = (issues: IssueResponse[], groupBy: keyof IssueResponse) => {
@@ -126,12 +132,12 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
     function getDifficultyIcon(difficulty: number | undefined) {
         const style = {
             marginBottom: "-18px",
-            marginLeft: "18px"
+            marginLeft: "26px",
         };
 
         switch (difficulty) {
             case 1:
-                return <KeyboardArrowUpIcon/>;
+                return <KeyboardArrowUpIcon style={{marginLeft: -6}}/>;
             case 2:
                 return (
                     <div style={{display: "flex", flexDirection: "column"}}>
@@ -251,26 +257,26 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
         const timeDiff = endDate.getTime() - now.getTime();
         const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
         if (status == 0) {
-            return <Typography style={{color: 'white'}}>
+            return <Typography className="listItemsText" style={{color: 'white'}}>
                 Issue completed
             </Typography>
         }
         if (status == 2) {
-            return <Typography style={{color: 'white'}}>
+            return <Typography className="listItemsText" style={{color: 'white'}}>
                 Issue closed
             </Typography>
         }
         if (status == 3) {
-            return <Typography style={{color: 'white'}}>
+            return <Typography className="listItemsText" style={{color: 'white'}}>
                 Issue paused
             </Typography>
         }
         if (daysDiff < 0) {
-            return <Typography style={{color: 'white'}}>
+            return <Typography className="listItemsText" style={{color: 'white'}}>
                 {Math.abs(daysDiff)} days overdue!
             </Typography>
         } else {
-            return <Typography style={{color: '#64B5F6'}}>
+            return <Typography className="listItemsText" style={{color: '#64B5F6'}}>
                 {daysDiff} days left
             </Typography>
         }
@@ -280,35 +286,51 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
         <div style={{
             width: "100%",
             marginLeft: 0,
-            marginTop: 10
         }}>
             <div style={{
                 borderBottom: "1px solid white",
-                height: 80
+                height: 80,
+                backgroundColor: '#c4b5ab',
+                marginBottom: 8
             }}>
-                <Typography sx={{
-                    right: 115, position: 'absolute', fontWeight: 700,
-                    letterSpacing: '.1rem',
-                    textDecoration: 'none',
-                    color: 'white'
-                }}>
-                    Group by
-                </Typography>
+                {/*<Typography className="listItemsText" sx={{*/}
+                {/*    right: 115, position: 'absolute', fontWeight: 700,*/}
+                {/*    letterSpacing: '.1rem',*/}
+                {/*    textDecoration: 'none',*/}
+                {/*    color: 'white',*/}
+                {/*    backgroundColor: '#ded3c5',*/}
+                {/*}}>*/}
+                {/*    Group by*/}
+                {/*</Typography>*/}
                 <Select
                     MenuProps={{
-                        disableScrollLock: true
+                        disableScrollLock: true,
                     }}
                     sx={{
                         right: 75, position: 'absolute', width: 140, fontWeight: 550,
                         letterSpacing: '.1rem',
                         textDecoration: 'none',
-                        color: 'white',
-                        '& > fieldset': {borderColor: "#F0F0F0"}
+                        backgroundColor: '#ded3c5',
+                        color: '#857366',
+                        marginTop: 1,
+                        '& > fieldset': {borderColor: "#F0F0F0"},
+                        "& .MuiOutlinedInput-notchedOutline": {
+                            border: 0
+                        },
+                        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                            border: "none"
+                        },
+                        "&:hover": {
+                            backgroundColor: "#b79a84",
+                            color: "#FFFFFF"
+                        },
 
                     }} value={groupBy}
                     onChange={(e) => setGroupBy(e.target.value)}>
                     {groupByOptions.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <MenuItem className="listItemsText" sx={{
+                            color: "#FFFFFF"
+                        }} key={option.value} value={option.value}>
                             {option.label}
                         </MenuItem>
                     ))}
@@ -321,8 +343,9 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                             <div key={issue.issueId} style={{
                                 display: "flex",
                                 flexDirection: "column",
+                                height: 110,
+                                backgroundColor: '#ad998b',
                                 borderBottom: "1px solid white",
-                                height: 110
                             }}
                             >
                                 <div style={{
@@ -338,7 +361,7 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                         justifyContent: "space-between",
                                         width: "100%"
                                     }}>
-                                        <div style={{
+                                        <div title="Change issue status" style={{
                                             display: 'flex',
                                             flexDirection: "row",
                                             alignItems: 'center',
@@ -350,11 +373,11 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                     backgroundColor: (() => {
                                                         switch (issue.status) {
                                                             case 0:
-                                                                return '#8BC34A';
+                                                                return '#739072';
                                                             case 1:
-                                                                return '#64B5F6';
+                                                                return '#96B6C5';
                                                             case 2:
-                                                                return '#E57373';
+                                                                return '#FD8A8A';
                                                             case 3:
                                                                 return 'gray';
                                                             default:
@@ -366,7 +389,8 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                     padding: '8px',
                                                     margin: '4px',
                                                     width: 110,
-                                                    cursor: 'pointer'
+                                                    cursor: 'pointer',
+                                                    marginTop: 35
                                                 }}
                                                 onClick={(event) => handleMenuClick(event, issue, 'status')}
                                             >
@@ -385,40 +409,43 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                     }
                                                 })()}
                                             </Typography>
-                                            <Typography
+                                            <Typography title="Change issue name" className="listItemsText"
                                                 style={{
                                                     color: 'white',
                                                     padding: '8px',
                                                     margin: '4px',
                                                     width: 200,
-                                                    cursor: 'pointer'
+                                                    cursor: 'pointer',
+                                                    marginTop: 35
                                                 }}
                                                 onClick={(event) => handleMenuClick(event, issue, 'name')}
                                             >
                                                 {issue.name}
                                             </Typography>
                                         </div>
-                                        <div>
-                                            <Typography
+                                        <div title="Show issue description">
+                                            <Typography className="listItemsText"
                                                 style={{
                                                     color: 'white',
                                                     width: 200,
-                                                    cursor: 'pointer'
+                                                    cursor: 'pointer',
+                                                    marginTop: 35
                                                 }}
                                                 onClick={(event) => handleMenuClick(event, issue, 'description')}
                                             >
-                                                Show description
+                                                Description
                                             </Typography>
                                         </div>
 
-                                        <div style={{display: "flex", justifyContent: "space-between", width: 200}}>
+                                        <div style={{display: "flex", justifyContent: "space-between", width: 200,marginTop: 35}}>
                                             {getDaysLeft(issue.endDate!, issue.status!)}
                                         </div>
 
-                                        <div style={{display: "flex", justifyContent: "space-between", width: 200}}>
-                                            <Typography style={{
+                                        <div title="Change issue performer" style={{display: "flex", justifyContent: "space-between", width: 200}}>
+                                            <Typography className="listItemsText" style={{
                                                 color: 'white',
-                                                cursor: 'pointer'
+                                                cursor: 'pointer',
+                                                marginTop: 25
                                             }}
                                                         onClick={(event) => {
                                                             handleMenuClick(event, issue, 'performer');
@@ -434,23 +461,27 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                             width: 200,
                                             cursor: 'pointer'
                                         }}>
-                                            <div onClick={(event) => handleMenuClick(event, issue, 'priority')}>
-                                                <Typography style={{
-                                                    color: 'white'
+                                            <div title="Change issue priority" onClick={(event) => handleMenuClick(event, issue, 'priority')}>
+                                                <Typography className="listItemsText" style={{
+                                                    color: 'white',
+                                                    marginTop: 25
                                                 }}>Priority</Typography>
                                                 {getPriorityIcon(issue.priority)}
                                             </div>
-                                            <div style={{cursor: 'pointer'}}
+                                            <div title="Change issue difficulty" style={{cursor: 'pointer'}}
                                                  onClick={(event) => handleMenuClick(event, issue, 'difficulty')}>
-                                                <Typography style={{
-                                                    color: 'white'
+                                                <Typography className="listItemsText" style={{
+                                                    color: 'white',
+                                                    marginTop: 25
                                                 }}>Difficulty</Typography>
                                                 {getDifficultyIcon(issue.difficulty)}
                                             </div>
                                         </div>
-                                        <div>
+                                        <div title="Show issue details" style={{
+                                            marginTop: 25
+                                        }}>
                                             <Link
-                                                href={`/issue/${issue.issueId}`}
+                                                href={`/TaskMateFrontend_v1/#/issue/${issue.issueId}`}
                                                 onClick={handleClick}
                                                 onContextMenu={(e) => {
                                                     e.preventDefault();
@@ -469,11 +500,12 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                 <MenuItem onClick={handleGoToIssue}>Go to issue page</MenuItem>
                                             </Menu>
                                         </div>
-                                        <div
+                                        <div title="Delete issue"
                                             onClick={() => deleteIssue(issue.issueId!)}>
                                             <DeleteIcon sx={{
                                                 color: 'white',
-                                                cursor: 'pointer'
+                                                cursor: 'pointer',
+                                                marginTop: 3
                                             }}></DeleteIcon>
                                         </div>
                                         <Menu
@@ -498,7 +530,25 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                         >
                                             {selectedKey === 'name' ? (
                                                 <MenuItem>
-                                                    <TextField
+                                                    <TextField sx={{
+                                                        '& label.Mui-focused': {
+                                                            color: 'white',
+                                                        },
+                                                        '& .MuiInput-underline:after': {
+                                                            borderBottomColor: '#857366',
+                                                        },
+                                                        '& .MuiOutlinedInput-root': {
+                                                            '& fieldset': {
+                                                                borderColor: '#857366',
+                                                            },
+                                                            '&:hover fieldset': {
+                                                                borderColor: '#857366',
+                                                            },
+                                                            '&.Mui-focused fieldset': {
+                                                                borderColor: '#857366',
+                                                            },
+                                                        },
+                                                    }}
                                                         label="New Name"
                                                         value={newIssueName}
                                                         onChange={(e) => setNewIssueName(e.target.value)}
@@ -520,10 +570,10 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                         cursor: 'none',
                                                     },
                                                     "& .MuiButtonBase-root": {
-                                                        backgroundColor: "white",
+                                                        backgroundColor: "#b79a84",
                                                         transition: "background-color 0.3s",
                                                         "&:hover": {
-                                                            backgroundColor: "#acc4e4",
+                                                            backgroundColor: "#857366",
                                                         },
                                                     }
                                                 }}>
@@ -531,13 +581,13 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                         style={{
                                                             minWidth: 150,
                                                             minHeight: 250,
-                                                            backgroundColor: "#acc4e4"
+                                                            backgroundColor: "#b79a84"
                                                         }}
                                                         value={newIssueDescription}
                                                         onChange={(e) => setNewIssueDescription(e.target.value)}
                                                     />
                                                     <Button sx={{
-                                                        color: "#64B5F6"
+                                                        color: "#FFFFFF"
                                                     }} onClick={(e) => handleParameterChange(newIssueDescription)}>
                                                         Change
                                                     </Button>

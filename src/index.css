@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -77,7 +79,6 @@ body {
   /*display: flex;*/
   min-width: 100%;
   min-height: 100%;
-  background-image: url("src/images/background.jpg");
 }
 
 .popup-enter {
@@ -111,11 +112,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .popup-content {
-  /* Стили для содержимого всплывающего окна */
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -156,7 +156,7 @@ body {
 }
 
 .rbc-header {
-  background: #64B5F6;
+  background: #ad998b;
   color: white;
   padding: 10px;
   font-size: 12px;
@@ -176,11 +176,11 @@ body {
   background-color: transparent !important;
 }
 
-.rbc-time-slot {
-  background-color: #eaf3fa;
-  color: #74a4c3;
-  border-color: aqua !important;
-}
+/*.rbc-time-slot {*/
+/*  background-color: #eaf3fa;*/
+/*  color: #74a4c3;*/
+/*  border-color: aqua !important;*/
+/*}*/
 
 .rbc-event-label {
   display: none !important;
@@ -195,7 +195,7 @@ body {
 }
 
 .rbc-toolbar {
-  background-color: #64B5F6 !important;
+  background-color: #ad998b !important;
 }
 .rbc-time-content, .rbc-time-header-gutter {
   display: none !important;
@@ -235,8 +235,20 @@ body {
   font-weight: 700;
 }
 
+.rbc-off-range .rbc-button-link{
+  color: #79665b !important;
+}
+
+.rbc-off-range-bg {
+  background-color: #b79a84 !important;
+}
+
 .rbc-today {
-  background-color: #64B5F6 !important;
+  background-color: #ded3c5 !important;
+}
+
+.rbc-current .rbc-button-link {
+  color: #79665b !important;
 }
 
 .rbc-toolbar button {
@@ -247,7 +259,8 @@ body {
 .mainPersonalSpaceDiv {
   width: 100%; 
   overflow-x: hidden;
-  min-height: 100vh
+  min-height: 100vh;
+  background-color: #857366;
 }
 
 .subMainPersonalSpaceDiv {
@@ -259,6 +272,7 @@ body {
   border-bottom: 1px solid white;
   transition: transform 0.3s ease;
   overflow: hidden;
+  background-color: #ad998b !important;
 }
 
 .buttonLeftMenuOpen {
@@ -266,7 +280,10 @@ body {
   max-height: 50px !important;
   margin-top: 10px !important;
   margin-left: 2px !important;
-  color: #64B5F6 !important;
+/*  color: #64B5F6 !important;*/
+/*  marginLeft: 20, backgroundColor: "#b79a84",*/
+/*  color: "#ffffff" ,*/
+/*"&:hover": {backgroundColor: "#857366"}*/
 }
 
 .personalSpaceHeaders {
@@ -284,8 +301,8 @@ body {
 }
 
 .invitesCount {
-  color: #E57373;
-  font-size: 25px !important;
+  color: #d05858;
+  font-size: 30px !important;
   font-family: monospace !important;
   font-weight: 700 !important;
   letter-spacing: .3rem !important;
@@ -294,4 +311,34 @@ body {
   bottom: 35%;
 }
 
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  background-color: #ded3c5 !important;
+}
 
+.css-10hburv-MuiTypography-root {
+  font-family: "Trebuchet MS", serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.1em !important;
+}
+
+/*.css-1kxs7f1-MuiModal-root-MuiPopover-root-MuiMenu-root .MuiMenu-paper {*/
+/*  background-color: #b79a84 !important;*/
+/*}*/
+
+.MuiMenu-paper {
+  background-color: #b79a84 !important;
+}
+
+/*.MuiButtonBase-root {*/
+/*  background-color: #b79a84 !important;*/
+/*}*/
+
+.listItemsText {
+  font-family: "Trebuchet MS", serif !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.1em !important;
+}
+
+.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: black;
+}

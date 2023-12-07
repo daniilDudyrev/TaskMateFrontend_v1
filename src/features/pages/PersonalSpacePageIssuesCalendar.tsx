@@ -126,8 +126,8 @@ const EventWrapper: React.FC<EventWrapperProps> = ({children, event}) => {
                             border: "1px solid white",
                             marginBottom: 5,
                             boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-                            background: "linear-gradient(to bottom, #9bb0cd, #acc4e4)",
-                            borderRadius: "10px",
+                            backgroundColor: "#b79a84",
+                            borderRadius: "8px",
                             padding: "10px",
                             display: 'flex',
                             flexDirection: "column",
@@ -142,11 +142,11 @@ const EventWrapper: React.FC<EventWrapperProps> = ({children, event}) => {
                                     backgroundColor: (() => {
                                         switch (event.status) {
                                             case 0:
-                                                return '#8BC34A';
+                                                return '#739072';
                                             case 1:
-                                                return '#64B5F6';
+                                                return '#96B6C5';
                                             case 2:
-                                                return '#E57373';
+                                                return '#FD8A8A';
                                             case 3:
                                                 return 'gray';
                                             default:

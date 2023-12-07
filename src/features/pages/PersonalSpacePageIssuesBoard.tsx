@@ -6,6 +6,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {Typography} from "@mui/material";
 import {IssueApi} from "../../apis/issue-api";
 import {AxiosRequestConfig} from "axios";
+import {StrictModeDroppable} from "../StrictModeDroppable";
 
 interface PersonalSpacePageIssuesProps {
     issues: IssueResponse[];
@@ -25,8 +26,8 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
             "ngrok-skip-browser-warning": 'skip-browser-warning'
         },
     }
-    
-    
+
+
     const statusMap: { [key: string]: number } = {
         '0': 0,
         '1': 1,
@@ -49,7 +50,7 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
 
             const updatedIssues = [...issues];
             const issueIndex = updatedIssues.findIndex((issue) => issue.issueId === issueId);
-            
+
             if (issue) {
                 const issue = updatedIssues[issueIndex];
                 issue.status = newStatus;
@@ -126,52 +127,52 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
                 return <KeyboardArrowUpIcon/>;
         }
     }
-    
+
     // @ts-ignore
     const Column = ({status, issues}) => (
         <div style={{
             minHeight: 114,
             minWidth: 300
         }}>
-            <Typography
-                style={{
-                    backgroundColor: (() => {
-                        switch (statusMap[status]) {
-                            case 0:
-                                return '#8BC34A';
-                            case 1:
-                                return '#64B5F6';
-                            case 2:
-                                return '#E57373';
-                            case 3:
-                                return 'gray';
-                            default:
-                                return 'gray';
-                        }
+            {/*<Typography*/}
+            {/*    style={{*/}
+            {/*        backgroundColor: (() => {*/}
+            {/*            switch (statusMap[status]) {*/}
+            {/*                case 0:*/}
+            {/*                    return '#739072';*/}
+            {/*                case 1:*/}
+            {/*                    return '#96B6C5';*/}
+            {/*                case 2:*/}
+            {/*                    return '#FD8A8A';*/}
+            {/*                case 3:*/}
+            {/*                    return 'gray';*/}
+            {/*                default:*/}
+            {/*                    return 'gray';*/}
+            {/*            }*/}
 
-                    })(),
-                    color: 'white',
-                    padding: '8px',
-                    margin: '4px',
-                    width: 110,
-                    marginLeft: 95
-                }}
-            >
-                {(() => {
-                    switch (statusMap[status]) {
-                        case 0:
-                            return 'Done';
-                        case 1:
-                            return 'In Progress';
-                        case 2:
-                            return 'Closed';
-                        case 3:
-                            return 'Paused';
-                        default:
-                            return 'Unknown';
-                    }
-                })()}
-            </Typography>
+            {/*        })(),*/}
+            {/*        color: 'white',*/}
+            {/*        padding: '8px',*/}
+            {/*        margin: '4px',*/}
+            {/*        width: 110,*/}
+            {/*        marginLeft: 95*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    {(() => {*/}
+            {/*        switch (statusMap[status]) {*/}
+            {/*            case 0:*/}
+            {/*                return 'Done';*/}
+            {/*            case 1:*/}
+            {/*                return 'In Progress';*/}
+            {/*            case 2:*/}
+            {/*                return 'Closed';*/}
+            {/*            case 3:*/}
+            {/*                return 'Paused';*/}
+            {/*            default:*/}
+            {/*                return 'Unknown';*/}
+            {/*        }*/}
+            {/*    })()}*/}
+            {/*</Typography>*/}
             {/*@ts-ignore*/}
             {issues.map((issue, index) => (
                 <Draggable
@@ -188,9 +189,9 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
                             <div style={{
                                 border: "1px solid white",
                                 marginBottom: 5,
-                                boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-                                background: "linear-gradient(to bottom, #9bb0cd, #acc4e4)",
-                                borderRadius: "10px",
+                                boxShadow: "0 0 8px rgba(0, 0, 0, 0.5)",
+                                backgroundColor: "#ad998b",
+                                borderRadius: "8px",
                                 padding: "10px",
                                 display: 'flex',
                                 flexDirection: "row",
@@ -215,11 +216,11 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
                                     </Typography>
                                 </div>
                                 <div style={{display: "flex", justifyContent: "space-between", width: 200}}>
-                                    <div 
+                                    <div
                                     >
                                         {getPriorityIcon(issue.priority)}
                                     </div>
-                                    <div 
+                                    <div
                                     >
                                         {getDifficultyIcon(issue.difficulty)}
                                     </div>
@@ -234,29 +235,65 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
 
     return (
         <div style={{
-            width: '100%',
-            marginLeft: '10%',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: ''
+            display: 'flex', flexDirection: 'column', width: '100%', height: '10vh'
         }}>
-            <DragDropContext onDragEnd={handleDragEnd}>
-                {Object.keys(statusMap).map((status) => (
-                    <Droppable droppableId={status} key={status}>
-                        {(provided, snapshot) => (
-                            <div style={{
-                                borderLeft: "1px solid white",
-                                borderRight: "1px solid white",
-                                paddingLeft:10,
-                                paddingRight:10
-                            }} ref={provided.innerRef}>
-                                <Column status={status} issues={groupedIssues[status] || []} />
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                ))}
-            </DragDropContext>
+            <div style={{display: 'flex', flexDirection: 'row', marginLeft: '11%'}}>
+                <Typography style={{
+                    backgroundColor: '#739072',
+                    color: 'white',
+                    padding: '8px',
+                    margin: '4px',
+                    width: 110,
+                    marginLeft: 95
+                }}>Done</Typography>
+                <Typography style={{
+                    backgroundColor: '#96B6C5', color: 'white',
+                    padding: '8px',
+                    margin: '4px',
+                    width: 110,
+                    marginLeft: 200
+                }}>In Progress</Typography>
+                <Typography style={{
+                    backgroundColor: '#FD8A8A', color: 'white',
+                    padding: '8px',
+                    margin: '4px',
+                    width: 110,
+                    marginLeft: 200
+                }}>Closed</Typography>
+                <Typography style={{
+                    backgroundColor: 'gray', color: 'white',
+                    padding: '8px',
+                    margin: '4px',
+                    width: 110,
+                    marginLeft: 210
+                }}>Paused</Typography>
+            </div>
+            <div style={{
+                width: '100%',
+                height: '90vh',
+                marginLeft: '10%',
+                display: 'flex',
+                flexDirection: 'row'
+            }}>
+                <DragDropContext onDragEnd={handleDragEnd}>
+                    {Object.keys(statusMap).map((status) => (
+                        <StrictModeDroppable droppableId={status} key={status}>
+                            {(provided, snapshot) => (
+                                <div style={{
+                                    borderLeft: "1px solid white",
+                                    borderRight: "1px solid white",
+                                    height: '100vh',
+                                    paddingLeft: 10,
+                                    paddingRight: 10,
+                                }} ref={provided.innerRef}>
+                                    <Column status={status} issues={groupedIssues[status] || []}/>
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </StrictModeDroppable>
+                    ))}
+                </DragDropContext>
+            </div>
         </div>
     );
 }

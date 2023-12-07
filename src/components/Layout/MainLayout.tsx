@@ -8,7 +8,6 @@ import { Routes, BrowserRouter as Router, Route, HashRouter } from 'react-router
 import NotfoundPage from "../../features/NotfoundPage";
 
 import MainPage from "../../features/MainPage";
-// import image from "../../images/background.jpg";
 import PersonalSpacePage from "../../features/pages/PersonalSpacePage";
 import {ToastContainer} from "react-toastify";
 import IssueDetailsPage from "../../features/pages/IssueDetailsPage";

@@ -35,8 +35,9 @@ const UserAddModal: React.FC<UserAddModalProps> = ({    addUserInProjectOpen,
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: 400,
-                    backgroundColor: '#b8cce4',
-                    border: '2px solid white',
+                    backgroundColor: '#b79a84',
+                    border: "1px solid #ded3c5",
+                    borderRadius: "4px",
                     boxShadow: 24,
                     p: 4,
                     display: 'flex',
@@ -53,18 +54,42 @@ const UserAddModal: React.FC<UserAddModalProps> = ({    addUserInProjectOpen,
                         Add user
                     </Typography>
 
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         label="Email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
-                    <Button
+                    <Button sx={{
+                        marginTop: 2,
+                        "&.MuiButtonBase-root": {
+                            backgroundColor: '#ded3c5',
+                            "&:hover": {backgroundColor: "#857366", color: "#FFFFFF"},
+                            color: '#857366',
+                        },
+                    }}
                         onClick={() => handleInviteUserInProject(email)}
                         variant="contained"
                         color="primary"
-                        sx={{marginTop: 2}}
                     >
                         Submit
                     </Button>

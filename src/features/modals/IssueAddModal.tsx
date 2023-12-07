@@ -4,6 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import {ProjectUserResponse} from "../../models";
 import {UserApi} from "../../apis/user-api";
 import {AxiosRequestConfig} from "axios";
+import '../../index.css';
 
 const userApi = new UserApi();
 
@@ -81,8 +82,9 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: 400,
-                    backgroundColor: '#b8cce4',
-                    border: '2px solid white',
+                    backgroundColor: '#b79a84',
+                    border: "1px solid #ded3c5",
+                    borderRadius: "4px",
                     boxShadow: 24,
                     p: 4,
                     display: 'flex',
@@ -99,7 +101,25 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                         Add issue
                     </Typography>
 
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         label="Priority"
                         type="number"
                         required={true}
@@ -107,7 +127,25 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                         onChange={(e) => setPriority(parseInt(e.target.value, 10))}
                     />
 
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         label="Difficulty"
                         type="number"
                         required={true}
@@ -115,19 +153,73 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                         onChange={(e) => setDifficulty(parseInt(e.target.value, 10))}
                     />
 
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         label="Name"
                         required={true}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         label="Description"
                         required={true}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
-                    <TextField
+                    <TextField sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         InputLabelProps={{ shrink: true }}
                         label="Date"
                         type="date"
@@ -136,7 +228,25 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                         onChange={(e) => setEndDate(e.target.value)}
 
                     />
-                    <FormControl
+                    <FormControl sx ={{
+                        '& label.Mui-focused': {
+                            color: 'white',
+                        },
+                        '& .MuiInput-underline:after': {
+                            borderBottomColor: '#857366',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&:hover fieldset': {
+                                borderColor: '#857366',
+                            },
+                            '&.Mui-focused fieldset': {
+                                borderColor: '#857366',
+                            },
+                        },
+                    }}
                         required={true}>
                         <InputLabel>Performer</InputLabel>
                         <Select
@@ -157,7 +267,12 @@ const IssueAddModal: React.FC<IssueAddModalProps> = ({
                         onClick={() => handleAddIssue(priority, difficulty, name, description, performerId, new Date(Date.now()), new Date(endDate))}
                         variant="contained"
                         color="primary"
-                        sx={{marginTop: 2}}
+                        sx={{marginTop: 2,
+                            "&.MuiButtonBase-root": {
+                                backgroundColor: '#ded3c5',
+                                "&:hover": {backgroundColor: "#857366", color: "#FFFFFF"},
+                                color: '#857366',
+                            },}}
                     >
                         Submit
                     </Button>

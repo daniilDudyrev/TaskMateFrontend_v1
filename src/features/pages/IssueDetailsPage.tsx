@@ -2,11 +2,13 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {IssueApi} from "../../apis/issue-api";
-import {AxiosRequestConfig} from "axios/index";
-import {IssueLog} from "../../models/issue-log";
+import {AxiosRequestConfig} from "axios";
+import {IssueLog} from "../../models";
 import List from "@mui/material/List";
 import {Grid, ListItem, ListItemText, Paper, Typography} from "@mui/material";
 import {UserApi} from "../../apis/user-api";
+import FlagIcon from "@mui/icons-material/Flag";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const issueApi = new IssueApi();
 const userApi = new UserApi();
@@ -18,6 +20,7 @@ const IssueDetailsPage: React.FC = () => {
     const [issue, setIssue] = useState<IssueResponse>();
     const [issueLogs, setIssueLogs] = useState<IssueLog[]>();
     const [userEmails, setUserEmails] = useState({});
+    let index = 0;
     const requestConfig: AxiosRequestConfig = {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -32,10 +35,13 @@ const IssueDetailsPage: React.FC = () => {
         }
         fetchIssue();
     }, []);
+
     useEffect(() => {
         const fetchIssueLogs = async () => {
             const response = await issueApi.issueGetIssueLogsByIssueIdGet(id, requestConfig);
             const data = response.data;
+            // @ts-ignore
+            const sortedDataDescending = data.sort((a, b) => new Date(b.changeDateTime) - new Date(a.changeDateTime));
             setIssueLogs(data || []);
         }
         fetchIssueLogs();
@@ -46,86 +52,221 @@ const IssueDetailsPage: React.FC = () => {
     }, [issueLogs]);
 
     const fetchUserEmails = async () => {
-        const emails = {};
-        // @ts-ignore
-        for (const log of issueLogs) {
-            try {
-                const response = await userApi.userGetByIdGet(log.userId, requestConfig);
-                // @ts-ignore
-                emails[issue.performerId] = response.data.email;
-            } catch (error) {
-                console.error(`Error fetching email for user ${log.userId}:`, error);
-            }
-        }
+        try {
+            const uniqueUserIds = Array.from(new Set(issueLogs?.map(issueLog => issueLog.userId)));
+            const emails = {};
 
-        setUserEmails(emails);
+            for (const userId of uniqueUserIds) {
+                try {
+                    const response = await userApi.userGetByIdGet(userId, requestConfig);
+                    // @ts-ignore
+                    emails[userId] = response.data.email;
+                } catch (error) {
+                    console.error(`Error fetching email for user ${userId}:`, error);
+                }
+            }
+
+            setUserEmails(emails);
+        } catch (error) {
+            console.error('Error fetching user emails:', error);
+        }
     };
-    
+
+    function getPriorityIcon(priority: number | undefined) {
+        switch (priority) {
+            case 1:
+                return <FlagIcon style={{color: '#8BC34A'}}/>;
+            case 2:
+                return <FlagIcon style={{color: '#64B5F6'}}/>;
+            case 3:
+                return <FlagIcon style={{color: '#E57373'}}/>;
+            default:
+                return <FlagIcon style={{color: 'grey'}}/>;
+        }
+    }
+
+    function getDifficultyIcon(difficulty: number | undefined) {
+        const style = {
+            marginBottom: "-18px",
+            marginLeft: "26px",
+        };
+
+        switch (difficulty) {
+            case 1:
+                return <KeyboardArrowUpIcon style={style}/>;
+            case 2:
+                return (
+                    <div style={{display: "flex", flexDirection: "column"}}>
+                        <KeyboardArrowUpIcon style={style}/>
+                        <KeyboardArrowUpIcon style={style}/>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div style={{display: "flex", flexDirection: "column"}}>
+                        <KeyboardArrowUpIcon style={style}/>
+                        <KeyboardArrowUpIcon style={style}/>
+                        <KeyboardArrowUpIcon style={style}/>
+                    </div>
+                );
+            default:
+                return <KeyboardArrowUpIcon/>;
+        }
+    }
+
     return (
         <div
             style={{
                 width: "100%",
-                height: "99vh",
+                height: "90vh",
                 marginLeft: 20,
-                marginTop: 10,
+                marginTop: 100,
                 display: 'flex',
                 flexDirection: 'row'
             }}>
-            <List>
-                {issueLogs?.map((issueLog) => (
-                    issueLog.oldValue !== issueLog.newValue && (
-                        <ListItem key={issueLog.id}>
-                            <ListItemText>
-                                <Typography>
-                                    {/*@ts-ignore*/}
-                                    {userEmails[issueLog.userId]} changed {issueLog.propertyName} from "{issueLog.oldValue}" to "{issueLog.newValue}"
-                                </Typography>
-                            </ListItemText>
-                        </ListItem>
-                    )
-                ))}
-            </List>
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Typography variant="h4" gutterBottom>
-                        Issue Details
+
+
+            <div style={{
+                backgroundColor: '#b79a84',
+                height: 400,
+                border: "1px solid #ded3c5",
+                borderRadius: "4px",
+                width: 500,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-around',
+                marginLeft: 60
+            }}>
+
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Name:</strong>
                     </Typography>
-                </Grid>
+                    <Typography className="listItemsText">
+                        {/*@ts-ignore*/}
+                        {issue?.name}
+                    </Typography>
+                </div>
 
-                <Grid item xs={12} md={6}>
-                    <Paper elevation={3} style={{ padding: '16px' }}>
-                        <Typography>
-                            <strong>Name:</strong> {issue?.name}
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Description:</strong>
+                    </Typography>
+                    <Typography className="listItemsText">
+                        {/*@ts-ignore*/}
+                        {issue?.description}
+                    </Typography>
+                </div>
 
-                        <Typography>
-                            <strong>Description:</strong> {issue?.description}
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Priority:</strong>
+                    </Typography>
+                    <div>
+                        {getPriorityIcon(issue?.priority)}
+                    </div>
+                </div>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Difficulty:</strong>
+                    </Typography>
+                    <div>
+                        {getDifficultyIcon(issue?.difficulty)}
+                    </div>
+                </div>
 
-                        <Typography>
-                            <strong>Priority:</strong> {issue?.priority}
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Performer:</strong>
+                    </Typography>
+                    <Typography className="listItemsText">
+                        {/*@ts-ignore*/}
+                        {userEmails[issue?.performerId]}
+                    </Typography>
+                </div>
 
-                        <Typography>
-                            <strong>Difficulty:</strong> {issue?.difficulty}
-                        </Typography>
-                        
-                        <Typography>
-                            {/*@ts-ignore*/}
-                            <strong>Performer:</strong> {userEmails[issue?.performerId]}
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>End Date:</strong>
+                    </Typography>
+                    <Typography className="listItemsText">
+                        {/*@ts-ignore*/}
+                        {new Date(issue?.endDate).toDateString()}
+                    </Typography>
+                </div>
 
-                        <Typography>
-                            {/*@ts-ignore*/}
-                            <strong>End Date:</strong> {issue?.endDate}
-                        </Typography>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                    <Typography className="listItemsText">
+                        <strong>Status:</strong>
+                    </Typography>
+                    <Typography
+                        style={{
+                            backgroundColor: (() => {
+                                switch (issue?.status) {
+                                    case 0:
+                                        return '#739072';
+                                    case 1:
+                                        return '#96B6C5';
+                                    case 2:
+                                        return '#FD8A8A';
+                                    case 3:
+                                        return 'gray';
+                                    default:
+                                        return 'gray';
+                                }
 
-                        <Typography>
-                            <strong>Status:</strong> {issue?.status}
-                        </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
+                            })(),
+                            color: 'white',
+                            padding: '8px',
+                            width: 110,
+                        }}
+                        className="listItemsText"
+                    >
+                        {(() => {
+                            switch (issue?.status) {
+                                case 0:
+                                    return 'Done';
+                                case 1:
+                                    return 'In Progress';
+                                case 2:
+                                    return 'Closed';
+                                case 3:
+                                    return 'Paused';
+                                default:
+                                    return 'Unknown';
+                            }
+                        })()}
+                    </Typography>
+                </div>
+            </div>
+            <Paper style={{maxHeight: 800, overflow: 'auto', overflowX: 'hidden', marginLeft: 220}}>
+                <List>
+                    {issueLogs?.map((issueLog) => (
+                        issueLog.oldValue !== issueLog.newValue && (
+                            <ListItem key={issueLog.id}
+                                      style={{
+                                          backgroundColor: (index = index + 1) % 2 == 0 ? '#EDEDED' : '#b79a84',
+                                          display: 'flex',
+                                          flexDirection: 'row',
+                                          justifyContent: 'space-between'
+                                      }}>
+                                <ListItemText>
+                                    <Typography className="listItemsText">
+                                        {/*@ts-ignore*/}
+                                        {userEmails[issueLog.userId]} changed {issueLog.propertyName} from
+                                        "{issueLog.oldValue}" to "{issueLog.newValue}"
+                                    </Typography>
+                                </ListItemText>
+                                <Typography
+                                    className="listItemsText">
+                                    {/*@ts-ignore*/}
+                                    {new Date(issueLog.changeDateTime).toDateString()}
+                                </Typography>
+                            </ListItem>
+                        )
+                    ))}
+                </List>
+            </Paper>
         </div>
     );
 }
