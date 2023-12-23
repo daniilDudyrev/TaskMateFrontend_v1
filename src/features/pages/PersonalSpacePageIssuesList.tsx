@@ -281,6 +281,11 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
             </Typography>
         }
     }
+
+    // @ts-ignore
+    const navigateToIssueDetails = (issueId) => {
+        window.location.href = `/TaskMateFrontend_v1/#/issue/${issueId}`
+    }
     
     return (
         <div style={{
@@ -346,7 +351,7 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                 height: 110,
                                 backgroundColor: '#ad998b',
                                 borderBottom: "1px solid white",
-                            }}
+                            }} onClick={() => navigateToIssueDetails(issue.issueId)}
                             >
                                 <div style={{
                                     display: 'flex',
@@ -477,29 +482,29 @@ const PersonalSpacePageIssuesList: React.FC<PersonalSpacePageIssuesProps> = ({
                                                 {getDifficultyIcon(issue.difficulty)}
                                             </div>
                                         </div>
-                                        <div title="Show issue details" style={{
-                                            marginTop: 25
-                                        }}>
-                                            <Link
-                                                href={`/TaskMateFrontend_v1/#/issue/${issue.issueId}`}
-                                                onClick={handleClick}
-                                                onContextMenu={(e) => {
-                                                    e.preventDefault();
-                                                    handleClick(e);
-                                                }}
-                                            >
-                                                <MoreVertIcon sx={{
-                                                    color: 'white'
-                                                }}></MoreVertIcon>
-                                            </Link>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={Boolean(anchorEl)}
-                                                onClose={handleClose}
-                                            >
-                                                <MenuItem onClick={handleGoToIssue}>Go to issue page</MenuItem>
-                                            </Menu>
-                                        </div>
+                                        {/*<div title="Show issue details" style={{*/}
+                                        {/*    marginTop: 25*/}
+                                        {/*}}>*/}
+                                        {/*    <Link*/}
+                                        {/*        href={`/TaskMateFrontend_v1/#/issue/${issue.issueId}`}*/}
+                                        {/*        onClick={handleClick}*/}
+                                        {/*        onContextMenu={(e) => {*/}
+                                        {/*            e.preventDefault();*/}
+                                        {/*            handleClick(e);*/}
+                                        {/*        }}*/}
+                                        {/*    >*/}
+                                        {/*        <MoreVertIcon sx={{*/}
+                                        {/*            color: 'white'*/}
+                                        {/*        }}></MoreVertIcon>*/}
+                                        {/*    </Link>*/}
+                                        {/*    <Menu*/}
+                                        {/*        anchorEl={anchorEl}*/}
+                                        {/*        open={Boolean(anchorEl)}*/}
+                                        {/*        onClose={handleClose}*/}
+                                        {/*    >*/}
+                                        {/*        <MenuItem onClick={handleGoToIssue}>Go to issue page</MenuItem>*/}
+                                        {/*    </Menu>*/}
+                                        {/*</div>*/}
                                         <div title="Delete issue"
                                             onClick={() => deleteIssue(issue.issueId!)}>
                                             <DeleteIcon sx={{

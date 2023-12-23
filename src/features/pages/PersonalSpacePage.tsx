@@ -185,7 +185,7 @@ const PersonalSpacePage: React.FC = () => {
                 const response = await projectApi.projectGetAllByUserIdGet(requestConfig);
                 const data = response.data;
                 setProjects(data.projects || []);
-                console.log(data)
+                // console.log(data)
             } else {
                 navigate('/')
             }
@@ -378,7 +378,7 @@ const PersonalSpacePage: React.FC = () => {
     useEffect(() => {
         const getCreatorId = async () => {
             try {
-                console.log(token)
+                // console.log(token)
                 const response = await userApi.userGetCurrentGet(requestConfig);
                 const data = response.data;
                 if (data.id) {
@@ -436,8 +436,8 @@ const PersonalSpacePage: React.FC = () => {
                 const response = await projectApi.projectGetUsersByIdGet(projectId, requestConfig);
                 const data = response.data;
                 setProjectUsers(data.projectUsers || []);
-                console.log("projectUsers");
-                console.log(data.projectUsers);
+                // console.log("projectUsers");
+                // console.log(data.projectUsers);
             } catch (error) {
                 console.error('Error trying get users in project:', error);
             }
@@ -465,7 +465,7 @@ const PersonalSpacePage: React.FC = () => {
         const response = await issueApi.issueGetAllByPerformerIdGet(userId, requestConfig);
         const data = response.data;
         const issuesInProject = data.issues?.filter(issue => issue.projectId == selectedProject)
-        console.log(issuesInProject)
+        // console.log(issuesInProject)
         setPerformedIssues(issuesInProject || [])
         if (anchorElRef.current) {
             setIsUserDetailsOpen(anchorElRef.current);

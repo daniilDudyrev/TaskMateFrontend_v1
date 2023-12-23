@@ -127,6 +127,10 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
                 return <KeyboardArrowUpIcon/>;
         }
     }
+    
+    const navigateToIssueDetails = (issueId: string) => {
+        window.location.href = `/TaskMateFrontend_v1/#/issue/${issueId}`
+    }
 
     // @ts-ignore
     const Column = ({status, issues}) => (
@@ -197,7 +201,7 @@ const PersonalSpacePageIssuesBoard: React.FC<PersonalSpacePageIssuesProps> = ({i
                                 flexDirection: "row",
                                 alignItems: 'center',
                                 width: 300
-                            }}>
+                            }} onClick={() => navigateToIssueDetails(issue.issueId)}>
                                 <div style={{
                                     display: 'flex',
                                     flexDirection: "row",

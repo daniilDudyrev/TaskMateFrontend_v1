@@ -3,12 +3,10 @@ import {IssueResponse, ProjectUserResponse, Status} from "../../models";
 import {Calendar, Day, momentLocalizer} from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import {IssueApi, UserApi} from "../../api";
 import {AxiosRequestConfig} from "axios";
 import "../../index.css"
 import {Typography} from "@mui/material";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
-import IssueAddModal from "../modals/IssueAddModal";
 import IssueAddModalCalendar from "../modals/IssueAddModalCalendar";
 
 const localizer = momentLocalizer(moment);
@@ -21,10 +19,6 @@ interface PersonalSpacePageIssuesProps {
     handleAddIssue(priority: number, difficulty: number, name: string, description: string, performerId: string, startDate: Date, endDate: Date): Promise<void>,
 }
 
-const userApi = new UserApi();
-const issueApi = new IssueApi();
-
-
 interface EventWrapperProps {
     children: React.ReactNode;
     event: {
@@ -36,7 +30,7 @@ interface EventWrapperProps {
         performer: string,
         start: Date,
         end: Date
-    }
+    };
 }
 
 const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = ({
@@ -47,7 +41,6 @@ const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = 
                                                                                  }) => {
     const [issueEndDate, setIssueEndDate] = useState<Date | null>(null);
     const [issueAddOpen, setIssueAddOpen] = useState(false);
-    
     
     const token = localStorage.getItem("token");
     const requestConfig: AxiosRequestConfig = {
@@ -63,7 +56,6 @@ const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = 
         const month = end.getMonth();
         const year = end.getFullYear();
         const date = new Date(year, month, day);
-        console.log(date);
         setIssueEndDate(date);
         openIssueAddModal()
     }
@@ -87,8 +79,7 @@ const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = 
         start: new Date(issue.startDate || ''),
         end: new Date(issue.endDate || ''),
     }));
-
-
+    
     return (
         <div>
             <Calendar
@@ -104,7 +95,7 @@ const PersonalSpacePageIssuesCalendar: React.FC<PersonalSpacePageIssuesProps> = 
                 views={['month']}
                 components={{
                     // @ts-ignore
-                    eventWrapper: ({event, children}) => (
+                    eventWrapper: ({event, children }) => (
                         <EventWrapper event={event}>{children}</EventWrapper>
                     ),
                 }}
